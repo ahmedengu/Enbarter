@@ -1,0 +1,62 @@
+<div class="barter-requests">
+    <md-card ng-repeat="barter in vm.barters"
+             ng-if="barter.get('offerReview')&&barter.get('barterUpUser').id==vm.about.id">
+        <md-card-header>
+            <md-card-avatar>
+                <img class="md-user-avatar"
+                     ng-src="{{barter.get('user').get('pic').url() || 'assets/images/avatars/profile.jpg'}}"/>
+            </md-card-avatar>
+            <md-card-header-text>
+                <span class="md-title">{{barter.get('user').get('username')}}</span>
+                <span class="md-subhead">{{barter.get('updatedAt').toLocaleString()}}</span>
+            </md-card-header-text>
+            <span star-rating rating="barter.get('offerRate')" read-only="true"></span>
+        </md-card-header>
+        <md-card-title-media>
+            <div layout="row" layout-xs="column">
+                <div flex>
+                    <img ng-src="{{barter.get('offerCategory').get('pic')}}"
+                         class="md-card-image"></div>
+                <div flex>
+                    <img ng-src="{{barter.get('seekCategory').get('pic')}}"
+                         class="md-card-image"></div>
+            </div>
+        </md-card-title-media>
+        <md-card-title>
+            <md-card-title-text>
+                <span class="md-headline">{{barter.get('barterTitle')}}</span>
+                <span class="md-subhead">{{barter.get('offerReview')}}</span>
+            </md-card-title-text>
+        </md-card-title>
+    </md-card>
+    <md-card ng-repeat="barter in vm.barters"
+             ng-if="barter.get('barterUpReview')&&barter.get('user').id==vm.about.id">
+        <md-card-header>
+            <md-card-avatar>
+                <img class="md-user-avatar"
+                     ng-src="{{barter.get('barterUpUser').get('pic').url() || 'assets/images/avatars/profile.jpg'}}"/>
+            </md-card-avatar>
+            <md-card-header-text>
+                <span class="md-title">{{barter.get('barterUpUser').get('username')}}</span>
+                <span class="md-subhead">{{barter.get('updatedAt').toLocaleString()}}</span>
+            </md-card-header-text>
+            <span star-rating rating="barter.get('barterUpRate')" read-only="true"></span>
+        </md-card-header>
+        <md-card-title-media>
+            <div layout="row" layout-xs="column">
+                <div flex>
+                    <img ng-src="{{barter.get('offerCategory').get('pic')}}"
+                         class="md-card-image"></div>
+                <div flex>
+                    <img ng-src="{{barter.get('seekCategory').get('pic')}}"
+                         class="md-card-image"></div>
+            </div>
+        </md-card-title-media>
+        <md-card-title>
+            <md-card-title-text>
+                <span class="md-headline">{{barter.get('barterTitle')}}</span>
+                <span class="md-subhead">{{barter.get('barterUpReview')}}</span>
+            </md-card-title-text>
+        </md-card-title>
+    </md-card>
+</div>

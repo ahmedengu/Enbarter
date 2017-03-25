@@ -1,0 +1,27 @@
+{
+  "LOGIN_V2": {
+    "INTRO_TITLE": "Welcome to Enbarter!",
+    "INTRO_DESCRIPTION": "Enbarter is an online skill-exchange platform, driven by the oldest form of doing business: bartering. A barter is a system of exchange where goods or services are directly exchanged for other goods or services without an intermediary medium of exchange, mainly money.",
+    "TITLE": "Log in to your account",
+    "DESCRIPTION": "To enjoy bartering!",
+    "EMAIL": "Email",
+    "USERNAME": "Username",
+    "PASSWORD": "Password",
+    "REMEMBER_ME": "Remember Me",
+    "FORGOT_PASSWORD": "Forgot Password?",
+    "LOG_IN": "LOG IN",
+    "OR": "OR",
+    "WITH_GOOGLE": "Log in with Google",
+    "WITH_FACEBOOK": "Log in with Facebook",
+    "DONT_HAVE_ACCOUNT": "Don't have an account?",
+    "CREATE_ACCOUNT": "Create an account",
+    "ERRORS": {
+      "EMAIL_REQUIRED": "Email field is required",
+      "EMAIL_MUST_VALID": "Email must be a valid e-mail address",
+      "USERNAME_REQUIRED": "Username field is required",
+      "USERNAME_MUST_VALID": "Username must be valid",
+      "PASSWORD_REQUIRED": "Password field is required",
+      "PASSWORD_MUST_VALID": "Password must be at least 8 characters"
+    }
+  }
+}

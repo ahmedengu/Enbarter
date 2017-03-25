@@ -1,0 +1,149 @@
+<div id="register-v2" layout="row" layout-align="start">
+    <div id="register-v2-intro" flex hide show-gt-sm>
+        <div class="logo md-accent-bg">
+            <span>E</span>
+        </div>
+        <div class="title" translate="REGISTER_V2.INTRO_TITLE">
+            Welcome to Enbarter!
+        </div>
+        <div class="description" translate="REGISTER_V2.INTRO_DESCRIPTION">Enbarter is an online skill-exchange
+            platform,
+            driven by the oldest form of doing business: bartering. A barter is a system of exchange where goods or
+            services are directly exchanged for other goods or services without an intermediary medium of exchange,
+            mainly money.
+        </div>
+    </div>
+
+    <div id="register-v2-form-wrapper" class="flex-scrollable md-whiteframe-8dp" layout="column" flex ms-scroll>
+        <div id="register-v2-form">
+            <div class="logo md-accent-bg" hide-gt-sm>
+                <span>E</span>
+            </div>
+
+            <div class="title" translate="REGISTER_V2.TITLE">Create an account</div>
+            <div class="description" translate="REGISTER_V2.DESCRIPTION">To enjoy bartering!
+            </div>
+
+            <form name="registerForm" novalidate ng-submit="vm.register()">
+                <md-input-container class="md-block" md-no-float>
+                    <input name="name" ng-model="vm.form.name" placeholder="Full Name"
+                           translate translate-attr-placeholder="REGISTER_V2.NAME"
+                           required>
+                    <div ng-messages="registerForm.name.$error" role="alert">
+                        <div ng-message="required">
+                            <span translate="REGISTER_V2.ERRORS.NAME_REQUIRED">Full Name field is required</span>
+                        </div>
+                    </div>
+                </md-input-container>
+
+                <md-input-container class="md-block" md-no-float>
+                    <input name="username" ng-model="vm.form.username" placeholder="Username"
+                           translate translate-attr-placeholder="REGISTER_V2.USERNAME"
+                           ng-pattern="/^\w+$/" required>
+                    <div ng-messages="registerForm.username.$error" role="alert">
+                        <div ng-message="required">
+                            <span translate="REGISTER_V2.ERRORS.USERNAME_REQUIRED">Username field is required</span>
+                        </div>
+                        <div ng-message="pattern">
+                            <span translate="REGISTER_V2.ERRORS.USERNAME_MUST_VALID">Username must be valid</span>
+                        </div>
+                    </div>
+                </md-input-container>
+
+                <md-input-container class="md-block" md-no-float>
+                    <input type="password" name="password" ng-model="vm.form.password" placeholder="Password"
+                           translate translate-attr-placeholder="REGISTER_V2.PASSWORD"
+                           ng-pattern="/^.{7,}$/" required>
+                    <div ng-messages="registerForm.password.$error" role="alert">
+                        <div ng-message="required">
+                            <span translate="REGISTER_V2.ERRORS.PASSWORD_REQUIRED">Password field is required</span>
+                        </div>
+                        <div ng-message="pattern">
+                            <span translate="REGISTER_V2.ERRORS.PASSWORD_MUST_VALID">Password must be at least 8 characters</span>
+                        </div>
+                    </div>
+                </md-input-container>
+
+                <md-input-container class="md-block" md-no-float>
+                    <input type="email" name="email" ng-model="vm.form.email" placeholder="Email"
+                           translate translate-attr-placeholder="REGISTER_V2.EMAIL"
+                           ng-pattern="/^.+@.+\..+$/" required>
+                    <div ng-messages="registerForm.email.$error" role="alert" multiple>
+                        <div ng-message="required">
+                            <span translate="REGISTER_V2.ERRORS.EMAIL_REQUIRED">Email field is required</span>
+                        </div>
+                        <div ng-message="pattern">
+                            <span translate="REGISTER_V2.ERRORS.EMAIL_MUST_VALID">Email must be a valid e-mail address</span>
+                        </div>
+                    </div>
+                </md-input-container>
+
+                <md-input-container class="md-block" md-no-float>
+                    <input name="mobile" ng-model="vm.form.mobile" placeholder="Mobile"
+                           translate translate-attr-placeholder="REGISTER_V2.MOBILE"
+                           ng-pattern="/^[0-9]{9,15}$/" required>
+                    <div ng-messages="registerForm.mobile.$error" role="alert">
+                        <div ng-message="required">
+                            <span translate="REGISTER_V2.ERRORS.MOBILE_REQUIRED">Mobile field is required</span>
+                        </div>
+                        <div ng-message="pattern">
+                            <span translate="REGISTER_V2.ERRORS.MOBILE_MUST_VALID">Mobile must be valid</span>
+                        </div>
+                    </div>
+                </md-input-container>
+
+                <md-input-container class="md-block" md-no-float>
+                    <md-datepicker ng-model="vm.form.birthday" name="birthday" md-placeholder="Birthday"
+                                   md-open-on-focus ng-required="true"></md-datepicker>
+                    <div ng-messages="registerForm.birthday.$error" role="alert">
+                        <div ng-message="required">
+                            <span translate="REGISTER_V2.ERRORS.BIRTHDAY_REQUIRED">Birthday field is required</span>
+                        </div>
+                    </div>
+                </md-input-container>
+
+                <md-input-container class="md-block" md-no-float>
+                    <p translate="REGISTER_V2.GENDER">Gender: </p>
+                    <md-radio-group name="isMale" ng-model="vm.form.isMale" ng-required="true">
+                        <md-radio-button ng-value="true" aria-label="Male"> Male
+                        </md-radio-button>
+                        <md-radio-button ng-value="false" aria-label="Female"> Female
+                        </md-radio-button>
+                    </md-radio-group>
+                    <div ng-messages="registerForm.isMale.$error" role="alert">
+                        <div ng-message="required">
+                            <span translate="REGISTER_V2.ERRORS.GENDER_REQUIRED">Gender field is required</span>
+                        </div>
+                    </div>
+                </md-input-container>
+
+                <md-input-container class="md-block" md-no-float>
+                    <md-contact-chips
+                            ng-model="vm.interest"
+                            md-contacts="vm.interestSearch($query)"
+                            md-contact-name="name"
+                            md-contact-image="pic"
+                            md-require-match="true"
+                            md-highlight-flags="i"
+                            filter-selected="false"
+                            placeholder="Start typing your interest...">
+                    </md-contact-chips>
+                </md-input-container>
+
+                <md-progress-linear md-mode="indeterminate" ng-disabled="!isLoading"></md-progress-linear>
+
+                <md-button type="submit" class="md-raised md-accent submit-button" aria-label="CREATE MY ACCOUNT"
+                           ng-disabled="registerForm.$invalid || registerForm.$pristine || isLoading"
+                           translate="REGISTER_V2.CREATE_ACCOUNT"
+                           translate-attr-aria-label="REGISTER_V2.CREATE_ACCOUNT">
+                    CREATE MY ACCOUNT
+                </md-button>
+            </form>
+
+            <div class="login" layout="row" layout-sm="column" layout-align="center center">
+                <span class="text" translate="REGISTER_V2.ALREADY_HAVE">Already have an account?</span>
+                <a class="link" ui-sref="app.pages_auth_login-v2" translate="REGISTER_V2.LOGIN">Log in</a>
+            </div>
+        </div>
+    </div>
+</div>

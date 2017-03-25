@@ -1,0 +1,80 @@
+<div layout="row" layout-wrap>
+
+    <div class="about" layout="column" flex="100" flex-gt-sm="50" flex-gt-md="65">
+        <div class="profile-box info-box general md-whiteframe-1dp" layout="column">
+            <header class="md-accent-bg">
+                <div class="title" translate="PROFILE.GENERAL_INFORMATION">General Information</div>
+            </header>
+
+            <div class="content">
+                <div class="info-line" ng-if="vm.about.get('isMale')">
+                    <div class="title" translate="PROFILE.GENDER">Gender</div>
+                    <div class="info">{{vm.about.get('isMale')? 'Male' : 'Female'}}</div>
+                </div>
+
+                <div class="info-line" ng-if="vm.about.get('birthDay')">
+                    <div class="title" translate="PROFILE.BIRTHDAY">Birthday</div>
+                    <div class="info">{{vm.about.get('birthDay')}}</div>
+                </div>
+
+                <div class="info-line" ng-if="vm.about.get('bio')">
+                    <div class="title" translate="PROFILE.BIO">Bio</div>
+                    <div class="info">{{vm.about.get('bio')}}</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="profile-box info-box work md-whiteframe-1dp" layout="column">
+            <header class="md-accent-bg">
+                <div class="title" translate="PROFILE.WORK">Work</div>
+            </header>
+
+            <div class="content">
+
+                <div class="info-line">
+                    <div class="title" translate="PROFILE.SKILLS">Skills</div>
+                    <div class="info">
+                        <md-chips readonly="true" ng-model="vm.about.attributes.skills"></md-chips>
+                    </div>
+                </div>
+
+                <div class="info-line">
+                    <div class="title">Interest</div>
+                    <div class="info">
+                        <md-list>
+                            <md-list-item ng-repeat="item in vm.about.get('interest')">
+                                <p>{{item.get('name')}}</p>
+                            </md-list-item>
+                        </md-list>
+                    </div>
+                </div>
+
+                <div class="info-line">
+                    <div class="title" translate="PROFILE.SAMPLES">Samples of my work</div>
+                    <div class="info">
+                        <md-list>
+                            <md-list-item ng-repeat="item in vm.about.get('workLinks')">
+                                <a ng-href="item">{{item}}</a>
+                            </md-list-item>
+                        </md-list>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="about-sidebar" layout="column" flex="100" flex-gt-sm="50" flex-gt-md="35">
+        <div class="profile-box friends md-whiteframe-1dp" layout="column">
+            <header class="md-accent-bg" layout="row" layout-align="space-between center">
+                <div class="title" translate="PROFILE.FRIENDS">Friends</div>
+            </header>
+            <div class="content" layout="row" layout-wrap>
+                <div class="friend" flex="20" ng-repeat="friend in vm.followers"
+                     title="{{friend.get('from').get('username')}}">
+                    <img ng-src="{{friend.get('from').get('pic').url() || 'assets/images/avatars/profile.jpg'}}">
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

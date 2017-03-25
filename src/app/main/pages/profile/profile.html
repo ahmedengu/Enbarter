@@ -1,0 +1,92 @@
+<div id="profile" class="page-layout simple tabbed">
+
+    <!-- HEADER -->
+    <div class="header md-accent-bg" layout="column" layout-align="center center" layout-gt-sm="row"
+         layout-align-gt-sm="space-between end">
+        <div class="user-info" layout="column" layout-align="center center" layout-gt-sm="row"
+             layout-align-gt-sm="start center">
+            <img class="profile-image avatar huge"
+                 ng-src="{{vm.about.get('pic').url() || 'assets/images/avatars/profile.jpg'}}">
+
+            <div class="name">
+                {{vm.about.get('name') || vm.about.get('username')}}
+            </div>
+        </div>
+
+        <div class="actions" layout="row" layout-align="end center" ng-if="vm.about.id!=loggedIn.id">
+            <md-button class="md-raised md-accent" aria-label="Follow" translate="PROFILE.FOLLOW"
+                       translate-attr-aria-label="PROFILE.FOLLOW" ng-if="!vm.isFollowing()" ng-click="vm.follow()"
+                       ng-disabled="isLoading">Follow
+            </md-button>
+            <md-button class="md-raised md-accent" aria-label="Following" ng-if="vm.isFollowing()"  ng-click="vm.unFollow()"
+                       ng-disabled="isLoading">Following
+            </md-button>
+            <md-button class="md-raised md-primary" translate="PROFILE.SEND_MESSAGE"
+                       translate-attr-aria-label="PROFILE.SEND_MESSAGE">Send Message
+            </md-button>
+        </div>
+        <div class="actions" layout="row" layout-align="end center" ng-if="vm.about.id==loggedIn.id">
+            <md-button class="md-raised md-primary">Edit Profile</md-button>
+        </div>
+    </div>
+    <!-- / HEADER -->
+    <!-- CONTENT -->
+    <div class="content" flex>
+
+        <md-tabs md-dynamic-height md-selected="vm.selectedTab">
+            <md-tab>
+                <md-tab-label>
+                    <span translate="PROFILE.TIMELINE">Timeline</span>
+                </md-tab-label>
+                <md-tab-body>
+                    <md-content class="timeline-tab"
+                                ng-include="'app/main/pages/profile/tabs/timeline/timeline.html'">
+                    </md-content>
+                </md-tab-body>
+            </md-tab>
+            <md-tab>
+                <md-tab-label>
+                    <span translate="PROFILE.ABOUT">About</span>
+                </md-tab-label>
+                <md-tab-body>
+                    <md-content class="about-tab"
+                                ng-include="'app/main/pages/profile/tabs/about/about.html'">
+                    </md-content>
+                </md-tab-body>
+            </md-tab>
+            <md-tab>
+                <md-tab-label>
+                    <span translate="PROFILE.BARTERS">Barters</span>
+                </md-tab-label>
+                <md-tab-body>
+                    <md-content class="barters-tab"
+                                ng-include="'app/main/pages/profile/tabs/barters/barters.html'">
+                    </md-content>
+                </md-tab-body>
+            </md-tab>
+            <md-tab>
+                <md-tab-label>
+                    <span translate="PROFILE.REVIEWS">Reviews</span>
+                </md-tab-label>
+                <md-tab-body>
+                    <md-content class="barters-tab"
+                                ng-include="'app/main/pages/profile/tabs/reviews/reviews.html'">
+                    </md-content>
+                </md-tab-body>
+            </md-tab>
+            <md-tab ng-if="!vm.about.get('options') || vm.about.get('options').requestsPublic != false">
+                <md-tab-label>
+                    <span translate="PROFILE.BARTER_REQUESTS">Barter Requests</span>
+                </md-tab-label>
+                <md-tab-body>
+                    <md-content class="barter-requests-tab"
+                                ng-include="'app/main/pages/profile/tabs/barterRequests/barterRequests.html'">
+                    </md-content>
+                </md-tab-body>
+            </md-tab>
+        </md-tabs>
+
+    </div>
+    <!-- / CONTENT -->
+
+</div>

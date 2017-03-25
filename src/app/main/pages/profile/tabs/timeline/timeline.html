@@ -1,0 +1,216 @@
+<div layout="row" layout-wrap>
+
+    <div class="timeline" layout="column" flex="100" flex-gt-sm="55" flex-gt-md="65" flex-order="2"
+         flex-order-gt-sm="1">
+
+        <div class="profile-box add-post md-whiteframe-1dp">
+            <div class="form" flex>
+                <textarea placeholder="Write something.." translate
+                          translate-attr-placeholder="PROFILE.WRITE_SOMETHING" ng-model="vm.message"></textarea>
+
+                <footer layout="row" layout-align="end center">
+
+                    <md-button ng-disabled="isLoading || !vm.message.length" ng-click="vm.sendPost()"
+                               class="post-button md-accent md-raised"
+                               aria-label="POST"
+                               translate="PROFILE.POST" translate-attr-aria-label="PROFILE.POST">
+                        POST
+                    </md-button>
+                </footer>
+                <md-progress-linear md-mode="indeterminate" ng-disabled="!isLoading"></md-progress-linear>
+            </div>
+        </div>
+
+        <md-divider></md-divider>
+
+        <div class="timeline-item md-whiteframe-1dp" ng-repeat="post in vm.posts">
+            <header layout="row" layout-align="space-between start">
+                <div class="user" layout="row" layout-align="start center">
+                    <img class="avatar"
+                         ng-src="{{post.get('creator').get('pic').url() || 'assets/images/avatars/profile.jpg'}}">
+
+                    <div layout="column">
+                        <div class="title">
+                            <span class="username md-accent-color">{{post.get('creator').get('username')}}</span>
+                            <span ng-if="post.get('user').id != post.get('creator').id">
+                                <span ng-if="post.get('type') == 'post'" translate="PROFILE.TYPE_POST">posted on your
+                                timeline</span>
+                            <span ng-if="post.get('type') == 'something'" translate="PROFILE.TYPE_SOMETHING">shared something
+                                with you</span>
+                            <span ng-if="post.get('type') == 'video'" translate="PROFILE.TYPE_VIDEO">shared a video with
+                                you</span>
+                            <span ng-if="post.get('type') == 'article'" translate="PROFILE.TYPE_ARTICLE">shared an article with
+                                you</span></span>
+                        </div>
+                        <div class="time">{{post.get('createdAt').toLocaleString()}}</div>
+                    </div>
+                </div>
+
+                <md-menu>
+                    <md-button ng-click="$mdOpenMenu($event)" class="md-icon-button" aria-label="more" translate
+                               translate-attr-aria-label="PROFILE.MORE">
+                        <md-icon md-font-icon="icon-dots-vertical"></md-icon>
+                    </md-button>
+                    <md-menu-content>
+                        <md-menu-item
+                                ng-if="post.get('creator').id == loggedIn.id || post.get('user').id == loggedIn.id">
+                            <md-button ng-click="deletePost(post)">Delete</md-button>
+                        </md-menu-item>
+                        <md-menu-item
+                                ng-if="!(post.get('creator').id == loggedIn.id || post.get('user').id == loggedIn.id)">
+                            <md-button ng-click="reportPost(post)">Report</md-button>
+                        </md-menu-item>
+                    </md-menu-content>
+                </md-menu>
+
+            </header>
+
+            <div class="content">
+                <div ng-if="post.get('message')" class="message">
+                    {{post.get('message')}}
+                </div>
+
+                <div ng-if="post.get('media')" class="media">
+                    <img ng-if="post.get('media').type === 'image'" ng-src="{{post.media.preview}}">
+
+                    <div ng-if="post.get('media').type === 'video'" ng-bind-html="post.media.embed | toTrusted">
+                    </div>
+                </div>
+
+                <div ng-if="post.get('article')" layout="column" class="article">
+                    <div class="media">
+                        <img ng-src="{{post.get('article').media.preview}}">
+                    </div>
+                    <div class="title">{{post.get('article').title}}</div>
+                    <div class="subtitle">{{post.get('article').subtitle}}</div>
+                    <div class="excerpt">{{post.get('article').excerpt}}</div>
+                </div>
+
+                <div layout="row" layout-align="start center">
+                    <md-button class="like-button">
+                        <div layout="row" layout-align="start center">
+                            <md-icon md-font-icon="icon-heart-outline" class="s16"></md-icon>
+                            <span translate="PROFILE.LIKE">Like</span>&nbsp;<span>({{post.get('likes') || '0'}})</span>
+                        </div>
+                    </md-button>
+                </div>
+            </div>
+
+            <footer class="" layout="column" layout-align="start start">
+                <div ng-if="post.comments" class="comment-count">{{post.get('comments').length}} comments
+                    <md-icon md-font-icon="icon-keyboard_arrow_down"></md-icon>
+                </div>
+
+                <div class="comment" layout="row" layout-fill ng-repeat="comment in post.get('comments')">
+                    <img ng-src="{{comment.get('user').get('pic').url() || 'assets/images/avatars/profile.jpg'}}"
+                         class="avatar"/>
+
+                    <div flex layout="column">
+                        <div layout="row" layout-align="start center">
+                            <span class="username">{{comment.get('user').get('username')}}</span>
+                            <span class="time">{{comment.get('createdAt').toLocaleString()}}</span>
+                        </div>
+                        <div class="message">
+                            {{comment.get('message')}}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reply" layout="row" layout-fill>
+                    <img ng-src="{{vm.about.get('pic').url() || 'assets/images/avatars/profile.jpg'}}" class="avatar"/>
+
+                    <form flex>
+                        <textarea placeholder="Add a comment..." translate
+                                  translate-attr-placeholder="PROFILE.ADD_COMMENT"
+                                  ng-model="vm.comment[$index]"></textarea>
+                        <md-button ng-click="sendComment($index,post)" class="post-comment-button md-accent md-raised"
+                                   aria-label="Post Comment"
+                                   translate="PROFILE.POST_COMMENT" translate-aria-label="PROFILE.POST_COMMENT">
+                            Post Comment
+                        </md-button>
+                    </form>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <div class="timeline-sidebar" layout="column" flex="100" flex-gt-sm="45" flex-gt-md="35" flex-order="1"
+         flex-order-gt-sm="2">
+        <div class="profile-box latest-activity md-whiteframe-1dp no-margin" layout="column">
+            <header class="md-accent-bg" layout="row" layout-align="space-between center">
+                <div class="title">
+                    {{vm.about.get('membership').get('name')}}
+                </div>
+                <div class="more secondary-text">
+                    <md-icon class="white-fg"
+                             md-font-icon="glyphicon glyphicon-{{vm.about.get('membership').get('icon')}}"></md-icon>
+                </div>
+            </header>
+            <header class="md-accent-bg" layout="row" layout-align="space-between center">
+                <div class="title">
+                    Ratings
+                </div>
+                <span class="more secondary-text" star-rating rating="vm.about.get('rate')/vm.about.get('rateCount')"
+                      read-only="true"></span>
+            </header>
+            <header class="md-accent-bg" layout="row" layout-align="space-between center">
+                <div class="title">
+                    Completed Barters
+                </div>
+                <div class="more secondary-text">
+                    ({{vm.completedBarters}})
+                </div>
+            </header>
+            <header class="md-accent-bg" layout="row" layout-align="space-between center">
+                <div class="title">
+                    Favors
+                </div>
+                <div class="more secondary-text">
+                    ({{vm.about.get('favors')[0].count}})
+                </div>
+            </header>
+        </div>
+        <div class="profile-box latest-activity md-whiteframe-1dp" layout="column" ng-if="vm.about.get('rateCount')>0">
+            <header class="md-accent-bg" layout="row" layout-align="space-between center">
+                <div class="title" translate="PROFILE.LATEST_REVIEWS">Latest Reviews</div>
+                <div class="more secondary-text" translate="PROFILE.SEE_ALL"
+                     ng-click="vm.selectedTab=3">See All
+                </div>
+            </header>
+
+            <div class="content" layout="row" layout-wrap>
+                <div class="activities">
+                    <div class="activity" layout="row" layout-align="start start"
+                         ng-repeat="barter in vm.barters | limitTo:5"
+                         ng-if="barter.get('offerReview')&&barter.get('barterUpUser').id==vm.about.id">
+                        <img ng-src="{{barter.get('user').get('pic').url() || 'assets/images/avatars/profile.jpg'}}"
+                             class="avatar" alt="{{barter.get('user').get('username')}}"/>
+
+                        <div layout="column">
+                            <div>
+                                <span class="message">{{barter.get('offerRate')}} stars from</span>
+                                <span class="username md-accent-color">{{barter.get('barterUpUser').get('username')}}</span>
+                            </div>
+                            <span class="time secondary-text">{{barter.get('updatedAt').toLocaleString()}}</span>
+                        </div>
+                    </div>
+                    <div class="activity" layout="row" layout-align="start start"
+                         ng-repeat="barter in vm.barters | limitTo:5"
+                         ng-if="barter.get('barterUpReview')&&barter.get('user').id==vm.about.id">
+                        <img ng-src="{{barter.get('barterUpUser').get('pic').url() || 'assets/images/avatars/profile.jpg'}}"
+                             class="avatar" alt="{{barter.get('barterUpUser').get('username')}}"/>
+
+                        <div layout="column">
+                            <div>
+                                <span class="message">{{barter.get('barterUpRate')}} stars from</span>
+                                <span class="username md-accent-color">{{barter.get('barterUpUser').get('username')}}</span>
+                            </div>
+                            <span class="time secondary-text">{{barter.get('updatedAt').toLocaleString()}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

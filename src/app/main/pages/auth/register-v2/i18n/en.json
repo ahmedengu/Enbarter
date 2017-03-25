@@ -1,0 +1,36 @@
+{
+    "REGISTER_V2": {
+        "INTRO_TITLE": "Welcome to Enbarter!",
+        "INTRO_DESCRIPTION": "Enbarter is an online skill-exchange platform, driven by the oldest form of doing business: bartering. A barter is a system of exchange where goods or services are directly exchanged for other goods or services without an intermediary medium of exchange, mainly money.",
+        "TITLE": "Create an account",
+        "DESCRIPTION": "To enjoy bartering!",
+        "NAME": "Full Name",
+        "USERNAME": "Username",
+        "EMAIL": "Email",
+        "MOBILE": "Mobile",
+        "PASSWORD": "Password",
+        "GENDER": "Gender",
+        "MALE": "Male",
+        "FEMALE": "Female",
+        "READ_ACCEPT": "I read and accept",
+        "TERMS_COND": "terms and conditions",
+        "CREATE_ACCOUNT": "CREATE MY ACCOUNT",
+        "ALREADY_HAVE": "Already have an account?",
+        "LOGIN": "Log in",
+        "ERRORS": {
+            "NAME_REQUIRED": "Name field is required",
+            "NAME_MUST_VALID": "Name must be at least 3 words",
+            "USERNAME_REQUIRED": "Username field is required",
+            "USERNAME_MUST_VALID": "Username must be valid",
+            "EMAIL_REQUIRED": "Email field is required",
+            "EMAIL_MUST_VALID": "Email must be a valid e-mail address",
+            "MOBILE_REQUIRED": "Mobile field is required",
+            "MOBILE_MUST_VALID": "Mobile must be valid",
+            "BIRTHDAY_REQUIRED": "Birthday field is required",
+            "GENDER_REQUIRED": "Gender field is required",
+            "PASSWORD_REQUIRED": "Password field is required",
+            "PASSWORD_MUST_VALID": "Password must be at least 8 characters",
+            "TERMS_REQUIRED": "You must accept terms and conditions before submitting the form"
+        }
+    }
+}
