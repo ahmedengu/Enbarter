@@ -13,19 +13,15 @@
             <span star-rating rating="barter.get('offerRate')" read-only="true"></span>
         </md-card-header>
         <md-card-title-media>
-            <div layout="row" layout-xs="column">
-                <div flex>
-                    <img ng-src="{{barter.get('offerCategory').get('pic')}}"
-                         class="md-card-image"></div>
-                <div flex>
-                    <img ng-src="{{barter.get('seekCategory').get('pic')}}"
-                         class="md-card-image"></div>
+            <div layout="row" class="height-200">
+                <div flex background-image="barter.get('offerCategory').get('pic')"></div>
+                <div flex background-image="barter.get('seekCategory').get('pic')"></div>
             </div>
         </md-card-title-media>
         <md-card-title>
             <md-card-title-text>
                 <span class="md-headline">{{barter.get('barterTitle')}}</span>
-                <span class="md-subhead">{{barter.get('offerReview')}}</span>
+                <blockquote class="md-subhead">{{barter.get('offerReview')}}</blockquote>
             </md-card-title-text>
         </md-card-title>
     </md-card>
@@ -43,19 +39,15 @@
             <span star-rating rating="barter.get('barterUpRate')" read-only="true"></span>
         </md-card-header>
         <md-card-title-media>
-            <div layout="row" layout-xs="column">
-                <div flex>
-                    <img ng-src="{{barter.get('offerCategory').get('pic')}}"
-                         class="md-card-image"></div>
-                <div flex>
-                    <img ng-src="{{barter.get('seekCategory').get('pic')}}"
-                         class="md-card-image"></div>
+            <div layout="row" class="height-200">
+                <div flex background-image="barter.get('offerCategory').get('pic')"></div>
+                <div flex background-image="barter.get('seekCategory').get('pic')"></div>
             </div>
         </md-card-title-media>
         <md-card-title>
             <md-card-title-text>
                 <span class="md-headline">{{barter.get('barterTitle')}}</span>
-                <span class="md-subhead">{{barter.get('barterUpReview')}}</span>
+                <blockquote class="md-subhead">{{barter.get('barterUpReview')}}</blockquote>
             </md-card-title-text>
         </md-card-title>
     </md-card>

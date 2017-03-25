@@ -1,13 +1,9 @@
 <div class="barter-requests">
     <md-card ng-repeat="barter in vm.barterRequests">
         <md-card-title-media>
-            <div layout="row" layout-xs="column">
-                <div flex>
-                    <img ng-src="{{barter.get('offerCategory').get('pic')}}"
-                         class="md-card-image"></div>
-                <div flex>
-                    <img ng-src="{{barter.get('seekCategory').get('pic')}}"
-                         class="md-card-image"></div>
+            <div layout="row" class="height-200">
+                <div flex background-image="barter.get('offerCategory').get('pic')"></div>
+                <div flex background-image="barter.get('seekCategory').get('pic')"></div>
             </div>
         </md-card-title-media>
 
@@ -21,13 +17,15 @@
             </p>
         </md-card-content>
         <md-card-actions layout="row" layout-align="center center">
-            <md-button class="md-icon-button" aria-label="{{barter.get('offerCategory').get('name')}}" title="{{barter.get('offerCategory').get('name')}}">
+            <md-button class="md-icon-button" aria-label="{{barter.get('offerCategory').get('name')}}"
+                       title="{{barter.get('offerCategory').get('name')}}">
                 <md-icon md-font-icon="glyphicon glyphicon-{{barter.get('offerCategory').get('icon')}}"></md-icon>
             </md-button>
             <md-button class="md-icon-button" aria-label="For">
                 <md-icon md-font-icon="glyphicon glyphicon-transfer"></md-icon>
             </md-button>
-            <md-button class="md-icon-button" aria-label="{{barter.get('seekCategory').get('name')}}" title="{{barter.get('seekCategory').get('name')}}">
+            <md-button class="md-icon-button" aria-label="{{barter.get('seekCategory').get('name')}}"
+                       title="{{barter.get('seekCategory').get('name')}}">
                 <md-icon md-font-icon="glyphicon glyphicon-{{barter.get('seekCategory').get('icon')}}"></md-icon>
             </md-button>
         </md-card-actions>
