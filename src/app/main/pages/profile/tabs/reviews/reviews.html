@@ -4,7 +4,7 @@
         <md-card-header>
             <md-card-avatar>
                 <img class="md-user-avatar"
-                     ng-src="{{barter.get('user').get('pic').url() || 'assets/images/avatars/profile.jpg'}}"/>
+                     ui-sref="app.pages_profile.id({id:barter.get('user').id})"   ng-src="{{barter.get('user').get('pic').url() || 'assets/images/avatars/profile.jpg'}}"/>
             </md-card-avatar>
             <md-card-header-text>
                 <span class="md-title">{{barter.get('user').get('username')}}</span>
@@ -34,7 +34,7 @@
         <md-card-header>
             <md-card-avatar>
                 <img class="md-user-avatar"
-                     ng-src="{{barter.get('barterUpUser').get('pic').url() || 'assets/images/avatars/profile.jpg'}}"/>
+                     ui-sref="app.pages_profile.id({id:barter.get('barterUpUser').id})"   ng-src="{{barter.get('barterUpUser').get('pic').url() || 'assets/images/avatars/profile.jpg'}}"/>
             </md-card-avatar>
             <md-card-header-text>
                 <span class="md-title">{{barter.get('barterUpUser').get('username')}}</span>

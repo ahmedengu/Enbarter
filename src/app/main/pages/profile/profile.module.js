@@ -7,41 +7,77 @@
 
     /** @ngInject */
     function config($stateProvider, $translatePartialLoaderProvider, msNavigationServiceProvider, msApiProvider) {
+        var resolve = {
+            Timeline: function ($stateParams, msApi) {
+                return msApi.resolve('profile.timeline@find', {
+                    equalTo: ['user', {
+                        "__type": "Pointer",
+                        "className": '_User',
+                        "objectId": ($stateParams && $stateParams.id) || (Parse.User.current() && Parse.User.current().id)
+                    }]
+                });
+            },
+            About: function ($stateParams, msApi) {
+                return msApi.resolve('profile.about@get', {
+                    id: ($stateParams && $stateParams.id) || (Parse.User.current() && Parse.User.current().id)
+                });
+            },
+            Barters: function ($stateParams, msApi) {
+                return msApi.resolve('profile.barters@find', {
+                    or: [{
+                        equalTo: ['user', {
+                            "__type": "Pointer",
+                            "className": '_User',
+                            "objectId": ($stateParams && $stateParams.id) || (Parse.User.current() && Parse.User.current().id)
+                        }]
+                    }, {
+                        equalTo: ['barterUpUser', {
+                            "__type": "Pointer",
+                            "className": '_User',
+                            "objectId": ($stateParams && $stateParams.id) || (Parse.User.current() && Parse.User.current().id)
+                        }]
+                    }]
+                });
+            },
+            Followers: function ($stateParams, msApi) {
+                return msApi.resolve('profile.followers@find', {
+                    or: [{
+                        equalTo: {
+                            1: ['from', Parse.User.current()], 2: ['to', {
+                                "__type": "Pointer",
+                                "className": '_User',
+                                "objectId": ($stateParams && $stateParams.id) || (Parse.User.current() && Parse.User.current().id)
+                            }]
+                        }
+                    }, {
+                        equalTo: ['to', {
+                            "__type": "Pointer",
+                            "className": '_User',
+                            "objectId": ($stateParams && $stateParams.id) || (Parse.User.current() && Parse.User.current().id)
+                        }]
+                    }]
+                });
+            }
+        };
         $stateProvider.state('app.pages_profile', {
-            url: '/pages/profile/:id',
+            url: '/profile',
             views: {
                 'content@app': {
                     templateUrl: 'app/main/pages/profile/profile.html',
                     controller: 'ProfileController as vm'
                 }
-            }, resolve: {
-                Timeline: function ($stateParams, msApi) {
-                    return msApi.resolve('profile.timeline@find', {equalTo: ['user', ($stateParams && $stateParams.id) || Parse.User.current()]});
-                },
-                About: function ($stateParams, msApi) {
-                    return msApi.resolve('profile.about@get', {
-                        id: ($stateParams && $stateParams.id) || (Parse.User.current() && Parse.User.current().id)
-                    });
-                },
-                Barters: function ($stateParams, msApi) {
-                    return msApi.resolve('profile.barters@find', {
-                        or: [{
-                            equalTo: ['user', ($stateParams && $stateParams.id) || Parse.User.current()]
-                        }, {
-                            equalTo: ['barterUpUser', ($stateParams && $stateParams.id) || Parse.User.current()]
-                        }]
-                    });
-                },
-                Followers: function ($stateParams, msApi) {
-                    return msApi.resolve('profile.followers@find', {
-                        or: [{
-                            equalTo: ['from', Parse.User.current()]
-                        }, {
-                            limit: [20]
-                        }]
-                    });
+            }, resolve: resolve,
+            bodyClass: 'profile'
+        });
+
+        $stateProvider.state('app.pages_profile.id', {
+            url: '/:id',
+            views: {
+                'content@app': {
+                    templateUrl: 'app/main/pages/profile/profile.html',
+                    controller: 'ProfileController as vm'
                 }
-            },
+            }, resolve: resolve,
             bodyClass: 'profile'
         });
 

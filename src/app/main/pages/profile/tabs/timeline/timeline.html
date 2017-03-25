@@ -26,7 +26,7 @@
         <div class="timeline-item md-whiteframe-1dp" ng-repeat="post in vm.posts">
             <header layout="row" layout-align="space-between start">
                 <div class="user" layout="row" layout-align="start center">
-                    <img class="avatar"
+                    <img ui-sref="app.pages_profile.id({id:post.get('creator').id})" class="avatar"
                          ng-src="{{post.get('creator').get('pic').url() || 'assets/images/avatars/profile.jpg'}}">
 
                     <div layout="column">
@@ -102,7 +102,8 @@
                 </div>
 
                 <div class="comment" layout="row" layout-fill ng-repeat="comment in post.get('comments')">
-                    <img ng-src="{{comment.get('user').get('pic').url() || 'assets/images/avatars/profile.jpg'}}"
+                    <img ui-sref="app.pages_profile.id({id:comment.get('user').id})"
+                         ng-src="{{comment.get('user').get('pic').url() || 'assets/images/avatars/profile.jpg'}}"
                          class="avatar"/>
 
                     <div flex layout="column">
@@ -183,7 +184,8 @@
                     <div class="activity" layout="row" layout-align="start start"
                          ng-repeat="barter in vm.barters | limitTo:5"
                          ng-if="barter.get('offerReview')&&barter.get('barterUpUser').id==vm.about.id">
-                        <img ng-src="{{barter.get('user').get('pic').url() || 'assets/images/avatars/profile.jpg'}}"
+                        <img ui-sref="app.pages_profile.id({id:barter.get('user').id})"
+                             ng-src="{{barter.get('user').get('pic').url() || 'assets/images/avatars/profile.jpg'}}"
                              class="avatar" alt="{{barter.get('user').get('username')}}"/>
 
                         <div layout="column">
@@ -197,7 +199,8 @@
                     <div class="activity" layout="row" layout-align="start start"
                          ng-repeat="barter in vm.barters | limitTo:5"
                          ng-if="barter.get('barterUpReview')&&barter.get('user').id==vm.about.id">
-                        <img ng-src="{{barter.get('barterUpUser').get('pic').url() || 'assets/images/avatars/profile.jpg'}}"
+                        <img ui-sref="app.pages_profile.id({id:barter.get('barterUpUser').id})"
+                             ng-src="{{barter.get('barterUpUser').get('pic').url() || 'assets/images/avatars/profile.jpg'}}"
                              class="avatar" alt="{{barter.get('barterUpUser').get('username')}}"/>
 
                         <div layout="column">

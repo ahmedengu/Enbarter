@@ -71,7 +71,8 @@
             <div class="content" layout="row" layout-wrap>
                 <div class="friend" flex="20" ng-repeat="friend in vm.followers"
                      title="{{friend.get('from').get('username')}}">
-                    <img ng-src="{{friend.get('from').get('pic').url() || 'assets/images/avatars/profile.jpg'}}">
+                    <img ui-sref="app.pages_profile.id({id:friend.get('from').id})"
+                         ng-src="{{friend.get('from').get('pic').url() || 'assets/images/avatars/profile.jpg'}}">
                 </div>
             </div>
         </div>
