@@ -163,7 +163,8 @@
                 <div class="title">
                     Ratings
                 </div>
-                <span class="more secondary-text" star-rating rating="vm.about.get('rate')/vm.about.get('rateCount')"
+                <span class="more secondary-text" star-rating
+                      rating="vm.about.has('rateCount')? vm.about.get('rate')/vm.about.get('rateCount') : 5"
                       read-only="true"></span>
             </header>
             <header class="md-accent-bg" layout="row" layout-align="space-between center">
