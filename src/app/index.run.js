@@ -45,5 +45,30 @@
                     .ok(ok || 'Got it!')
             );
         }
+
+        $rootScope.reportObject = function (object) {
+            $mdDialog.show($mdDialog.prompt()
+                .title('Report')
+                .placeholder('description')
+                .ariaLabel('description')
+                .parent(angular.element(document.body))
+                .ok('Report!')
+                .cancel('Cancel')).then(function (result) {
+
+                var Report = Parse.Object.extend("Report");
+                var report = new Report();
+                report.set("user", Parse.User.current());
+                report.set("description", result);
+                report.addUnique("objects", object);
+                report.save({
+                    success: function (results) {
+                        $rootScope.alertModal('Thank you');
+                    },
+                    error: function (object, error) {
+                        $rootScope.alertModal(error.message, "Error");
+                    }
+                });
+            });
+        }
     }
 })();

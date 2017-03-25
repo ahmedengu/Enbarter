@@ -68,14 +68,17 @@
                         // Overwrite original function by wrapping it with $q
                         Parse[currentClass].prototype[method] = function () {
                             if (loadingMethods.indexOf(method) != -1) $rootScope.isLoading = true;
+                            $rootScope.loadingProgress = true;
                             return origMethod.apply(angular.copy(this), arguments)
                                 .then(function (data) {
-                                    if (loadingMethods.indexOf(method) != -1) $rootScope.isLoading = false;
                                     var defer = $q.defer();
                                     defer.resolve(data);
+                                    if (loadingMethods.indexOf(method) != -1) $rootScope.isLoading = false;
+                                    $rootScope.loadingProgress = false;
                                     return defer.promise;
                                 }, function (obj, err) {
                                     if (loadingMethods.indexOf(method) != -1) $rootScope.isLoading = false;
+                                    $rootScope.loadingProgress = false;
                                     return rejectHandler(obj, err);
                                 });
                         };
@@ -91,13 +94,17 @@
                         // Overwrite original function by wrapping it with $q
                         Parse[currentClass][method] = function () {
                             if (loadingMethods.indexOf(method) != -1) $rootScope.isLoading = true;
+                            $rootScope.loadingProgress = true;
                             return origMethod.apply(angular.copy(this), arguments)
                                 .then(function (data) {
                                     var defer = $q.defer();
                                     defer.resolve(data);
+                                    if (loadingMethods.indexOf(method) != -1) $rootScope.isLoading = false;
+                                    $rootScope.loadingProgress = false;
                                     return defer.promise;
                                 }, function (obj, err) {
                                     if (loadingMethods.indexOf(method) != -1) $rootScope.isLoading = false;
+                                    $rootScope.loadingProgress = false;
                                     return rejectHandler(obj, err);
                                 });
                         };

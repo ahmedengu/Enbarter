@@ -17,7 +17,6 @@
                         POST
                     </md-button>
                 </footer>
-                <md-progress-linear md-mode="indeterminate" ng-disabled="!isLoading"></md-progress-linear>
             </div>
         </div>
 
@@ -54,11 +53,11 @@
                     <md-menu-content>
                         <md-menu-item
                                 ng-if="post.get('creator').id == loggedIn.id || post.get('user').id == loggedIn.id">
-                            <md-button ng-click="deletePost(post)">Delete</md-button>
+                            <md-button ng-click="vm.deletePost($index)">Delete</md-button>
                         </md-menu-item>
                         <md-menu-item
                                 ng-if="!(post.get('creator').id == loggedIn.id || post.get('user').id == loggedIn.id)">
-                            <md-button ng-click="reportPost(post)">Report</md-button>
+                            <md-button ng-click="reportObject(post)">Report</md-button>
                         </md-menu-item>
                     </md-menu-content>
                 </md-menu>
@@ -88,20 +87,21 @@
 
                 <div layout="row" layout-align="start center">
                     <md-button class="like-button">
-                        <div layout="row" layout-align="start center">
-                            <md-icon md-font-icon="icon-heart-outline" class="s16"></md-icon>
-                            <span translate="PROFILE.LIKE">Like</span>&nbsp;<span>({{post.get('likes') || '0'}})</span>
+                        <div layout="row" layout-align="start center"
+                             ng-click="post.like?vm.unlike($index):vm.like($index)" ng-disabled="isLoading">
+                            <md-icon md-font-icon="icon-heart{{post.like?'':'-outline'}}" class="s16"></md-icon>
+                            <span translate="PROFILE.LIKE">Like</span>&nbsp;<span>({{post.likes || '0'}})</span>
                         </div>
                     </md-button>
                 </div>
             </div>
 
             <footer class="" layout="column" layout-align="start start">
-                <div ng-if="post.comments" class="comment-count">{{post.get('comments').length}} comments
+                <div ng-if="post.comments" class="comment-count">{{post.comments.length}} comments
                     <md-icon md-font-icon="icon-keyboard_arrow_down"></md-icon>
                 </div>
 
-                <div class="comment" layout="row" layout-fill ng-repeat="comment in post.get('comments')">
+                <div class="comment" layout="row" layout-fill ng-repeat="comment in post.comments">
                     <img ui-sref="app.pages_profile.id({id:comment.get('user').id})"
                          ng-src="{{comment.get('user').get('pic').url() || 'assets/images/avatars/profile.jpg'}}"
                          class="avatar"/>
@@ -110,6 +110,9 @@
                         <div layout="row" layout-align="start center">
                             <span class="username">{{comment.get('user').get('username')}}</span>
                             <span class="time">{{comment.get('createdAt').toLocaleString()}}</span>
+                            <md-icon flex md-font-icon="icon-flag" class="report-button s16"
+                                     ng-click="reportObject(comment)" ng-if="comment.get('user').id!=loggedIn.id"
+                                     layout="row" layout-align="end center"></md-icon>
                         </div>
                         <div class="message">
                             {{comment.get('message')}}
@@ -124,9 +127,10 @@
                         <textarea placeholder="Add a comment..." translate
                                   translate-attr-placeholder="PROFILE.ADD_COMMENT"
                                   ng-model="vm.comment[$index]"></textarea>
-                        <md-button ng-click="sendComment($index,post)" class="post-comment-button md-accent md-raised"
+                        <md-button ng-click="vm.sendComment($index)" class="post-comment-button md-accent md-raised"
                                    aria-label="Post Comment"
-                                   translate="PROFILE.POST_COMMENT" translate-aria-label="PROFILE.POST_COMMENT">
+                                   translate="PROFILE.POST_COMMENT" translate-aria-label="PROFILE.POST_COMMENT"
+                                   ng-disabled="isLoading || !vm.comment[$index]">
                             Post Comment
                         </md-button>
                     </form>

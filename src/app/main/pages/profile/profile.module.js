@@ -85,7 +85,10 @@
         $translatePartialLoaderProvider.addPart('app/main/pages/profile');
 
         // Api
-        msApiProvider.register('profile.timeline', ['UserPost', {equalTo: ['user', Parse.User.current()]}]);
+        msApiProvider.register('profile.timeline', ['Post', {
+            equalTo: ['user', Parse.User.current()],
+            descending: ['createdAt']
+        }]);
         msApiProvider.register('profile.about', ['_User', {
             id: (Parse.User.current() && Parse.User.current().id),
             include: ['barterSeeks,barterSeeks.seekCategory,barterSeeks.offerCategory,membership,favors.favor,interest']
@@ -97,7 +100,7 @@
                 equalTo: ['barterUpUser', Parse.User.current()]
             }],
             include: ['seekCategory,offerCategory,barterUpUser,user'],
-            descending: ['update']
+            descending: ['updatedAt']
         }]);
 
         msApiProvider.register('profile.followers', ['UserFollow', {
