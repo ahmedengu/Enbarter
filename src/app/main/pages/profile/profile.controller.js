@@ -88,6 +88,22 @@
             comment.set('post', vm.posts[index]);
             comment.set('message', vm.comment[index]);
             comment.set('user', Parse.User.current());
+
+            var acl = new Parse.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(false);
+
+            acl.setReadAccess(Parse.User.current(), true);
+            acl.setWriteAccess(Parse.User.current(), true);
+
+            acl.setReadAccess(vm.posts[index].get('user'), true);
+            acl.setWriteAccess(vm.posts[index].get('user'), true);
+
+            acl.setReadAccess(vm.posts[index].get('creator'), true);
+            acl.setWriteAccess(vm.posts[index].get('creator'), true);
+
+            comment.setACL(acl);
+
             comment.save({
                 success: function (comment) {
                     vm.comment[index] = "";
@@ -178,6 +194,18 @@
             post.destroy({
                 success: function (post) {
                     vm.posts.splice(index, 1);
+                },
+                error: function (error) {
+                    $rootScope.alertModal(error.message, "Error");
+                }
+            });
+        }
+
+        vm.deleteComment = function (index, post) {
+            var comment = post.comments[index];
+            comment.destroy({
+                success: function (comment) {
+                    post.comments.splice(index, 1);
                 },
                 error: function (error) {
                     $rootScope.alertModal(error.message, "Error");

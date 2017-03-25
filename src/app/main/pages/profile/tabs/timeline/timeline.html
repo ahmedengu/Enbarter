@@ -56,7 +56,7 @@
                             <md-button ng-click="vm.deletePost($index)">Delete</md-button>
                         </md-menu-item>
                         <md-menu-item
-                                ng-if="!(post.get('creator').id == loggedIn.id || post.get('user').id == loggedIn.id)">
+                                ng-if="post.get('creator').id != loggedIn.id">
                             <md-button ng-click="reportObject(post)">Report</md-button>
                         </md-menu-item>
                     </md-menu-content>
@@ -110,12 +110,20 @@
                         <div layout="row" layout-align="start center">
                             <span class="username">{{comment.get('user').get('username')}}</span>
                             <span class="time">{{comment.get('createdAt').toLocaleString()}}</span>
-                            <md-icon flex md-font-icon="icon-flag" class="report-button s16"
-                                     ng-click="reportObject(comment)" ng-if="comment.get('user').id!=loggedIn.id"
-                                     layout="row" layout-align="end center"></md-icon>
                         </div>
                         <div class="message">
                             {{comment.get('message')}}
+                        </div>
+                        <div class="actions" layout="row" layout-align="start center">
+                            <md-icon md-font-icon="icon-flag"
+                                     class="report-button s16"
+                                     ng-click="reportObject(comment)"
+                                     ng-if="comment.get('user').id!=loggedIn.id"></md-icon>
+                            <md-icon md-font-icon="icon-delete"
+                                     class="report-button s16"
+                                     ng-click="vm.deleteComment($index,post)"
+                                     ng-if="comment.getACL().permissionsById[loggedIn.id].write"
+                                     ng-disabled="isLoading"></md-icon>
                         </div>
                     </div>
                 </div>
