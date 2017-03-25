@@ -28,7 +28,8 @@
             </md-button>
         </div>
         <div class="actions" layout="row" layout-align="end center" ng-if="vm.about.id==loggedIn.id">
-            <md-button class="md-raised md-primary">Edit Profile</md-button>
+            <md-button class="md-raised md-primary" ng-click="vm.openEditDialog()">Edit Profile
+            </md-button>
         </div>
     </div>
     <!-- / HEADER -->

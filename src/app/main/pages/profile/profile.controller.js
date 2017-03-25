@@ -212,6 +212,19 @@
                 }
             });
         }
+
+        vm.openEditDialog = function () {
+            $mdDialog.show({
+                controller: 'ProfileEditDialogController',
+                controllerAs: 'vm',
+                templateUrl: 'app/main/pages/profile/edit/profile-edit-dialog.html',
+                parent: angular.element(document.body),
+                clickOutsideToClose: true,
+                locals: {
+                    User: vm.about
+                }
+            });
+        }
     }
 
 })();
